@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>404 Error</title>
+    <link rel="shortcut icon" href="404.png">
+  </head>
+  <body>
+    <div id="display" style="text-align: center; font-family: 'Times New Roman'; font-size: 50px; user-select: none;"><span id="num" onclick="add()">404</span> <span id="prestige" onclick="prestige()">Error</span><span id="prestige2" onclick="prestige2()"></span></div>
+    <div id="gg" style="text-align: center; display: none; font-family: Arial; font-size: 400px">GG<span id="continue" style="font-size: 50px; display: none" onclick="next()"><br>click to continue</span></div>
+    <div id="boost" style="text-align: center; font-family: 'Times New Roman'; font-size: 20px"></div>
+    <script>
+      var alphabet1="EFGHIJKLMNOPQRSTUVWXYZ";
+      var alphabet2="rstuvwxyz";
+      var alphabet3="opqrstuvwxyz";
+      var num=404;
+      var prestigelvl=0;
+      var prestigelvl2=0;
+      var prestigelvl3=0;
+      var prestigelvl4=0;
+      var prestigelvl5=0;
+      var prestigelvl6=0;
+      var donegg=0;
+      if (localStorage.getItem("num")){
+        num=Number(localStorage.getItem("num"));
+      }
+      if (localStorage.getItem("prestigelvl")){
+        prestigelvl=Number(localStorage.getItem("prestigelvl"));
+      }
+      if (localStorage.getItem("prestigelvl2")){
+        prestigelvl2=Number(localStorage.getItem("prestigelvl2"));
+      }
+      if (localStorage.getItem("prestigelvl3")){
+        prestigelvl3=Number(localStorage.getItem("prestigelvl3"));
+      }
+      if (localStorage.getItem("prestigelvl4")){
+        prestigelvl4=Number(localStorage.getItem("prestigelvl4"));
+      }
+      if (localStorage.getItem("prestigelvl5")){
+        prestigelvl5=Number(localStorage.getItem("prestigelvl5"));
+      }
+      if (localStorage.getItem("prestigelvl6")){
+        prestigelvl6=Number(localStorage.getItem("prestigelvl6"));
+      }
+      if (localStorage.getItem("donegg")){
+        donegg=Number(localStorage.getItem("donegg"));
+      }
+      document.getElementById("num").innerHTML=num;
+      if (prestigelvl==0){
+        document.getElementById("prestige").innerHTML=prestige2text();
+      } else{
+        document.getElementById("prestige").innerHTML=prestige2text()+prestigelvl;
+      }
+      if (prestigelvl>=100){
+        document.getElementById("prestige2").innerHTML="!";
+      }
+      if (document.getElementById("prestige").innerHTML.slice(0,5)!="Error"){
+        document.getElementById("boost").innerHTML="Boost: "+(prestigelvl2+1)+"x"+(prestigelvl3+1)+"x"+(prestigelvl4+1)+"x"+(prestigelvl5+1)+"x"+(prestigelvl6+1)+"^3="+(prestigelvl2+1)*(prestigelvl3+1)*(prestigelvl4+1)*(prestigelvl5+1)*(prestigelvl6+1)**3+"x<br>If boost right now: "+ifboost()[0]+"x"+ifboost()[1]+"x"+ifboost()[2]+"x"+ifboost()[3]+"x"+ifboost()[4]+"^3="+ifboost()[0]*ifboost()[1]*ifboost()[2]*ifboost()[3]*ifboost()[4]**3+"x";
+      }
+      function add(){
+        num+=(prestigelvl+1);
+        document.getElementById("num").innerHTML=num;
+      }
+      function prestige(){
+        if (num>=414){
+          prestigelvl+=Math.floor((num-404)/10)*(prestigelvl2+1)*(prestigelvl3+1)*(prestigelvl4+1)*(prestigelvl5+1)*(prestigelvl6+1)**3;
+          num=404;
+          document.getElementById("num").innerHTML=num;
+          document.getElementById("prestige").innerHTML=prestige2text()+prestigelvl;
+          if (prestigelvl>=100){
+            document.getElementById("prestige2").innerHTML="!";
+          }
+          document.getElementById("boost").innerHTML="Boost: "+(prestigelvl2+1)+"x"+(prestigelvl3+1)+"x"+(prestigelvl4+1)+"x"+(prestigelvl5+1)+"x"+(prestigelvl6+1)+"^3="+(prestigelvl2+1)*(prestigelvl3+1)*(prestigelvl4+1)*(prestigelvl5+1)*(prestigelvl6+1)**3+"x<br>If boost right now: "+ifboost()[0]+"x"+ifboost()[1]+"x"+ifboost()[2]+"x"+ifboost()[3]+"x"+ifboost()[4]+"^3="+ifboost()[0]*ifboost()[1]*ifboost()[2]*ifboost()[3]*ifboost()[4]**3+"x";
+        }
+      }
+      function prestige2(){
+        prestigelvl2+=addprestige2(prestigelvl);
+        prestigelvl3+=Math.floor(prestigelvl2/22);
+        prestigelvl2%=22;
+        prestigelvl4+=Math.floor(prestigelvl3/9);
+        prestigelvl3%=9;
+        prestigelvl5+=Math.floor(prestigelvl4/9);
+        prestigelvl4%=9;
+        prestigelvl6+=Math.floor(prestigelvl5/12);
+        prestigelvl5%=12;
+        if (prestigelvl6>=9 && donegg==0){
+          document.getElementById("display").style.display="none";
+          document.getElementById("boost").style.display="none";
+          donegg=1;
+          document.getElementById("gg").style.display="block";
+          setTimeout(()=>document.getElementById("continue").style.display="inline",1000);
+        }
+        prestigelvl=0;
+        num=404;
+        document.getElementById("num").innerHTML=num;
+        document.getElementById("prestige").innerHTML=prestige2text();
+        document.getElementById("prestige2").innerHTML="";
+        document.getElementById("boost").innerHTML="Boost: "+(prestigelvl2+1)+"x"+(prestigelvl3+1)+"x"+(prestigelvl4+1)+"x"+(prestigelvl5+1)+"x"+(prestigelvl6+1)+"^3="+(prestigelvl2+1)*(prestigelvl3+1)*(prestigelvl4+1)*(prestigelvl5+1)*(prestigelvl6+1)**3+"x<br>If boost right now: "+ifboost()[0]+"x"+ifboost()[1]+"x"+ifboost()[2]+"x"+ifboost()[3]+"x"+ifboost()[4]+"^3="+ifboost()[0]*ifboost()[1]*ifboost()[2]*ifboost()[3]*ifboost()[4]**3+"x";
+      }
+      function save(){
+        localStorage.setItem("num",num.toString());
+        localStorage.setItem("prestigelvl",prestigelvl.toString());
+        localStorage.setItem("prestigelvl2",prestigelvl2.toString());
+        localStorage.setItem("prestigelvl3",prestigelvl3.toString());
+        localStorage.setItem("prestigelvl4",prestigelvl4.toString());
+        localStorage.setItem("prestigelvl5",prestigelvl5.toString());
+        localStorage.setItem("prestigelvl6",prestigelvl6.toString());
+        localStorage.setItem("donegg",donegg.toString());
+      }
+      function prestige2text(){
+        if (prestigelvl6>=9){
+          return alphabet1[prestigelvl2]+alphabet2[prestigelvl3]+alphabet2[prestigelvl4]+alphabet3[prestigelvl5]+prestigelvl6+"?";
+        } else {
+          return alphabet1[prestigelvl2]+alphabet2[prestigelvl3]+alphabet2[prestigelvl4]+alphabet3[prestigelvl5]+alphabet2[prestigelvl6];
+        }
+      }
+      function next(){
+        document.getElementById("display").style.display="block";
+        document.getElementById("boost").style.display="block";
+        document.getElementById("gg").style.display="none";
+      }
+      function ifboost(){
+        if (prestigelvl>=100){
+          ifprestigelvl2=prestigelvl2;
+          ifprestigelvl3=prestigelvl3;
+          ifprestigelvl4=prestigelvl4;
+          ifprestigelvl5=prestigelvl5;
+          ifprestigelvl6=prestigelvl6;
+          ifprestigelvl2+=addprestige2(prestigelvl);
+          ifprestigelvl3+=Math.floor(ifprestigelvl2/22);
+          ifprestigelvl2%=22;
+          ifprestigelvl4+=Math.floor(ifprestigelvl3/9);
+          ifprestigelvl3%=9;
+          ifprestigelvl5+=Math.floor(ifprestigelvl4/9);
+          ifprestigelvl4%=9;
+          ifprestigelvl6+=Math.floor(ifprestigelvl5/12);
+          ifprestigelvl5%=12;
+          return [ifprestigelvl2+1,ifprestigelvl3+1,ifprestigelvl4+1,ifprestigelvl5+1,ifprestigelvl6+1];
+        } else {
+          return [prestigelvl2+1,prestigelvl3+1,prestigelvl4+1,prestigelvl5+1,prestigelvl6+1]
+        }
+      }
+      function addprestige2(howmuch){
+        if (howmuch==Infinity){
+          return 307;
+        } else {
+          return Math.floor(Math.log10(howmuch))-1;
+        }
+      }
+      setInterval(save,1000);
+    </script>
+  </body>
+</html>
